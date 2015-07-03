@@ -1,0 +1,45 @@
+#!/bin/sh -e
+# Linux Firewall: Simple Shell Script To Stop and Flush All Iptables Rules
+# Some Linux distros like Debian do not have /etc/init.d/iptables stop script
+# This can be also called from cron job if you are testing new firewall on
+# remote box to avoid lock out
+# -------------------------------------------------------------------------
+# Copyright (c) 2004 nixCraft project <http://cyberciti.biz/fb/>
+# This script is licensed under GNU GPL version 2.0 or above
+# -------------------------------------------------------------------------
+# This script is part of nixCraft shell script collection (NSSC)
+# Visit http://bash.cyberciti.biz/ for more information.
+# -------------------------------------------------------------------------
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+
+LOOP_INT="8"
+#script
+
+iptables --policy INPUT ACCEPT
+iptables --policy OUTPUT ACCEPT
+iptables --policy FORWARD ACCEPT
+iptables -t nat --policy PREROUTING ACCEPT
+iptables -t nat --policy OUTPUT ACCEPT
+iptables -t nat --policy POSTROUTING ACCEPT
+iptables -t mangle --policy PREROUTING ACCEPT
+iptables -t mangle --policy OUTPUT ACCEPT
+iptables --flush
+iptables -t nat --flush
+iptables -t mangle --flush
+iptables --delete-chain
+iptables -t nat --delete-chain
+iptables -t mangle --delete-chain
+iptables -A INPUT -i $LOOP_INT -j ACCEPT
+iptables -A OUTPUT -o $LOOP_INT -j ACCEPT
+
+#LOG Firewall Ipv4 rule chains removed
+NOW=$(date +"%m-%d-%Y %k:%M:%S")
+echo -n "\n $NOW Firewall script stopped" >> /home/typ/FirewallStartup

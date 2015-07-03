@@ -1,0 +1,41 @@
+#!/bin/sh -e
+# Linux Firewall: Simple Shell Script To Stop and Flush All Iptables Rules
+# Some Linux distros like Debian do not have /etc/init.d/iptables stop script
+# This can be also called from cron job if you are testing new firewall on
+# remote box to avoid lock out
+# -------------------------------------------------------------------------
+# Copyright (c) 2004 nixCraft project <http://cyberciti.biz/fb/>
+# This script is licensed under GNU GPL version 2.0 or above
+# -------------------------------------------------------------------------
+# This script is part of nixCraft shell script collection (NSSC)
+# Visit http://bash.cyberciti.biz/ for more information.
+# -------------------------------------------------------------------------
+LOOP_INT="8"
+
+iptables --flush
+iptables -t nat --flush
+iptables -t mangle --flush
+
+iptables -A INPUT -i $LOOP_INT -j ACCEPT
+iptables -A OUTPUT -o $LOOP_INT -j ACCEPT
+
+iptables --policy INPUT DROP
+iptables --policy OUTPUT DROP
+iptables --policy FORWARD DROP
+
+#Depricated alternative below
+#iptables -t nat --policy PREROUTING DROP
+#iptables -t nat --policy OUTPUT DROP
+#iptables -t nat --policy POSTROUTING DROP
+iptables -A INPUT -p tcp -d 1.1.1.1 --dport 21 -j REJECT
+
+iptables -t mangle --policy PREROUTING DROP
+iptables -t mangle --policy OUTPUT DROP
+iptables --delete-chain
+iptables -t nat --delete-chain
+iptables -t mangle --delete-chain
+
+#LOG Firewall Ipv4 everything closed
+NOW=$(date +"%m-%d-%Y %k:%M:%S")
+echo -n "\n $NOW Firewall panic mode" >> /home/typ/FirewallStartup
+echo "#panic :O"
