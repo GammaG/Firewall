@@ -32,5 +32,5 @@ iptables -t mangle --delete-chain
 
 #LOG Firewall Ipv4 everything closed
 NOW=$(date +"%m-%d-%Y %k:%M:%S")
-echo -n "\n $NOW Firewall panic mode" >> ~/FirewallStartup
+echo -n "\n $NOW Firewall panic mode" >> /home/typ/FirewallStartup
 echo "#panic :O"

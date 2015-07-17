@@ -169,6 +169,6 @@ $IPT -A INPUT -j DROP
  
 # log finish message
 NOW=$(date +"%m-%d-%Y %k:%M:%S")
-echo -n "\n $NOW Firewall script finished" >> ~/FirewallStartup
+echo -n "\n $NOW Firewall script finished" >> /home/typ/FirewallStartup
 
 exit 0

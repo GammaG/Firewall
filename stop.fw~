@@ -37,4 +37,4 @@ iptables -A OUTPUT -o $LOOP_INT -j ACCEPT
 
 #LOG Firewall Ipv4 rule chains removed
 NOW=$(date +"%m-%d-%Y %k:%M:%S")
-echo -n "\n $NOW Firewall script stopped" >> ~/FirewallStartup
+echo -n "\n $NOW Firewall script stopped" >> /home/typ/FirewallStartup
