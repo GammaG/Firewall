@@ -24,6 +24,7 @@ iptables --policy FORWARD ACCEPT
 iptables -t nat --policy PREROUTING ACCEPT
 iptables -t nat --policy OUTPUT ACCEPT
 iptables -t nat --policy POSTROUTING ACCEPT
+iptables -t nat --policy POSTROUTING ACCEPT
 iptables -t mangle --policy PREROUTING ACCEPT
 iptables -t mangle --policy OUTPUT ACCEPT
 iptables --flush

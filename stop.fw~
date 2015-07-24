@@ -24,6 +24,8 @@ iptables --policy FORWARD ACCEPT
 iptables -t nat --policy PREROUTING ACCEPT
 iptables -t nat --policy OUTPUT ACCEPT
 iptables -t nat --policy POSTROUTING ACCEPT
+iptables -t nat --policy POSTROUTING ACCEPT
+
 iptables -t mangle --policy PREROUTING ACCEPT
 iptables -t mangle --policy OUTPUT ACCEPT
 iptables --flush
@@ -37,4 +39,4 @@ iptables -A OUTPUT -o $LOOP_INT -j ACCEPT
 
 #LOG Firewall Ipv4 rule chains removed
 NOW=$(date +"%m-%d-%Y %k:%M:%S")
-echo -n "\n $NOW Firewall script stopped" >> /home/typ/FirewallStartup
+echo -n "\n $NOW Firewall script stopped" >> ~/FirewallStartup
